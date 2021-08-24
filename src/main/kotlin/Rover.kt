@@ -1,15 +1,23 @@
 import Direction.*
 
 class Rover {
+    var y = 0
     var direction = NORTH
     fun execute(command: String): String{
         command.forEach {
             when (it) {
                 'L' -> direction = direction.turnLeft()
                 'R' -> direction = direction.turnRight()
+                'F' -> y = forward()
             }
         }
-        return "0:0:${direction.value}"
+        return "0:$y:${direction.value}"
+    }
+
+    private fun forward(): Int {
+        if (direction == NORTH)
+            return y+1
+        return y
     }
 
 }
