@@ -35,7 +35,7 @@ class Rover {
             y = (y + 1) % 10
 
         if(direction == EAST)
-            x = x +1
+            x = (x + 1) % 10
 
         return Coordinate(x,y)
     }
