@@ -58,4 +58,14 @@ class RoverShould {
         val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "RF, 1:0:E",
+        "RFFFF, 4:0:E",
+    )
+    fun `move right`(command: String, expected: String){
+        val rover = Rover()
+        assertThat(rover.execute(command)).isEqualTo(expected)
+    }
 }

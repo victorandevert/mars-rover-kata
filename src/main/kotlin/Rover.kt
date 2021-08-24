@@ -1,34 +1,43 @@
 import Direction.*
 
 class Rover {
-    var y = 0
-    var direction = NORTH
+    private var direction = NORTH
+    private var coordinate = Coordinate()
     fun execute(command: String): String{
         command.forEach {
             when (it) {
                 'L' -> direction = direction.turnLeft()
                 'R' -> direction = direction.turnRight()
-                'F' -> y = forward()
-                'B' -> y = backward()
+                'F' -> coordinate = forward()
+                'B' -> coordinate = backward()
             }
         }
-        return "0:$y:${direction.value}"
+        return "${coordinate.x}:${coordinate.y}:${direction.value}"
     }
 
-    private fun backward(): Int {
+    private fun backward(): Coordinate {
+        var y = coordinate.y
+        var x = coordinate.x
+
         if (direction == NORTH)
             if (y == 0) {
-                return 9
+                y = 9
             }else {
-                return (y - 1) % 10
+                y = (y - 1) % 10
             }
-        return y
+        return Coordinate(x,y)
     }
 
-    private fun forward(): Int {
+    private fun forward(): Coordinate {
+        var y = coordinate.y
+        var x = coordinate.x
         if (direction == NORTH)
-            return (y + 1) % 10
-        return y
+            y = (y + 1) % 10
+
+        if(direction == EAST)
+            x = x +1
+
+        return Coordinate(x,y)
     }
 
 }
@@ -47,3 +56,4 @@ enum class Direction(val value: String, val left: String, val right: String) {
         return values().first { it.value == right }
     }
 }
+data class Coordinate(val x: Int = 0, val y: Int = 0)
