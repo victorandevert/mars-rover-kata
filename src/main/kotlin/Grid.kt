@@ -1,50 +1,57 @@
-class Grid(private val obstacles: List<Coordinate> = emptyList()) {
+class Grid(private val obstacles: List<Pair<Int,Int>> = emptyList()) {
 
-    fun moveForwardTo(coordinate: Coordinate, direction: Direction): Coordinate{
-        var y = coordinate.y
-        var x = coordinate.x
-
-        if (direction.isNorth())
-            y = increase(y)
-
-        if(direction.isEast())
-            x = increase(x)
-
-        if (direction.isWest())
-            x =  decrease(x)
-
-        if(direction.isSouth())
-            y = decrease(y)
-
-        val c = Coordinate(x, y)
-
-        return when {
-            obstacles.contains(c) -> coordinate
-            else -> c
+    fun move(direction: Char, position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
+        when (direction) {
+            'F' -> return moveForwardTo(position, orientation)
+            else -> return moveBackwardTo(position, orientation)
         }
     }
 
-    fun moveBackwardTo(coordinate: Coordinate, direction: Direction): Coordinate {
-        var y = coordinate.y
-        var x = coordinate.x
+    private fun moveForwardTo(position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
+        var (x, y) = position
 
-        if (direction.isNorth())
-            y = decrease(y)
-
-        if(direction.isEast())
-            x = decrease(x)
-
-        if(direction.isWest())
-            x = increase(x)
-
-        if(direction.isSouth())
+        if (orientation.isNorth())
             y = increase(y)
 
-        val c = Coordinate(x, y)
+        if(orientation.isEast())
+            x = increase(x)
+
+        if (orientation.isWest())
+            x =  decrease(x)
+
+        if(orientation.isSouth())
+            y = decrease(y)
+
+        val p = Pair(x,y)
 
         return when {
-            obstacles.contains(c) -> coordinate
-            else -> c
+            obstacles.contains(p) -> position
+            else -> p
+        }
+    }
+
+
+    private fun moveBackwardTo(position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
+        var (x, y) = position
+
+        if (orientation.isNorth())
+            y = decrease(y)
+
+        if(orientation.isEast())
+            x = decrease(x)
+
+        if(orientation.isWest())
+            x = increase(x)
+
+        if(orientation.isSouth())
+            y = increase(y)
+
+
+        val p = Pair(x,y)
+
+        return when {
+            obstacles.contains(p) -> position
+            else -> p
         }
 
     }
@@ -56,5 +63,3 @@ class Grid(private val obstacles: List<Coordinate> = emptyList()) {
         else -> (a - 1) % maxSquares
     }
 }
-
-data class Coordinate(val x: Int = 0, val y: Int = 0)

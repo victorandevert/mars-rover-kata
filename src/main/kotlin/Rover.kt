@@ -1,19 +1,18 @@
-import Direction.*
+import Orientation.*
 
 class Rover(private val grid: Grid) {
-    private var direction = NORTH
-    private var coordinate = Coordinate()
-
+    private var orientation = NORTH
+    private var position = Pair(0,0)
 
     fun execute(command: String): String{
         command.forEach {
             when (it) {
-                'L' -> direction = direction.turnLeft()
-                'R' -> direction = direction.turnRight()
-                'F' -> coordinate = grid.moveForwardTo(coordinate, direction)
-                'B' -> coordinate = grid.moveBackwardTo(coordinate, direction)
+                'L' -> orientation = orientation.turnLeft()
+                'R' -> orientation = orientation.turnRight()
+                else -> position = grid.move(it, position, orientation)
             }
         }
-        return "${coordinate.x}:${coordinate.y}:${direction.value}"
+        val (x, y) = position
+        return "${x}:${y}:${orientation.value}"
     }
 }

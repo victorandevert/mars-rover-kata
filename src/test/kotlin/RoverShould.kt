@@ -78,7 +78,7 @@ class RoverShould {
         "RFFFFFFFFFF, 0:0:E",
         "RFFFFFFFFFFFFFFFFF, 7:0:E"
     )
-    fun `wrap from right to left when moving forwawrd`(command: String, expected: String){
+    fun `wrap from right to left when moving forward`(command: String, expected: String){
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -111,7 +111,7 @@ class RoverShould {
         "BBBB, 0:7:N"
     )
     fun `stop when find an obstacle`(command: String, expected: String){
-        val obstacles = arrayListOf(Coordinate(0,3), Coordinate(0,6))
+        val obstacles = arrayListOf(Pair(0,3), Pair(0,6))
         val grid = Grid(obstacles)
         val rover = Rover(grid)
         assertThat(rover.execute(command)).isEqualTo(expected)
