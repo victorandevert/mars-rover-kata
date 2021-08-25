@@ -1,8 +1,16 @@
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class RoverShould {
+
+    private lateinit var rover: Rover
+
+    @BeforeEach
+    fun setup() {
+        rover = Rover(Grid())
+    }
 
     @ParameterizedTest
     @CsvSource(
@@ -12,7 +20,6 @@ class RoverShould {
         "LLLL, 0:0:N"
     )
     fun `turn left`(command: String, expected: String) {
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -24,7 +31,6 @@ class RoverShould {
         "RRRR, 0:0:N"
     )
     fun `turn right`(command: String, expected: String) {
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -34,7 +40,6 @@ class RoverShould {
         "FFFFFF, 0:6:N"
     )
     fun `move forward`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -44,7 +49,6 @@ class RoverShould {
         "FFFFFFFFFFFFF, 0:3:N",
     )
     fun `wrap from top to bottom when moving forward`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -55,7 +59,6 @@ class RoverShould {
         "BBBBB, 0:5:N",
     )
     fun `move backward`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -67,7 +70,6 @@ class RoverShould {
         "RBBBB, 6:0:E"
     )
     fun `move right`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -77,7 +79,6 @@ class RoverShould {
         "RFFFFFFFFFFFFFFFFF, 7:0:E"
     )
     fun `wrap from right to left when moving forwawrd`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -89,7 +90,6 @@ class RoverShould {
         "LBBBBBBBBBBBBBBBBB, 7:0:W"
     )
     fun `move left`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 
@@ -102,7 +102,6 @@ class RoverShould {
         "RRFFFFFFFFFFFF, 0:8:S"
     )
     fun `move south`(command: String, expected: String){
-        val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
 }
