@@ -1,5 +1,4 @@
-class Grid {
-    private val max_squares = 10
+class Grid(private val obstacles: List<Coordinate> = emptyList()) {
 
     fun moveForwardTo(coordinate: Coordinate, direction: Direction): Coordinate{
         var y = coordinate.y
@@ -17,7 +16,12 @@ class Grid {
         if(direction.isSouth())
             y = decrease(y)
 
-        return Coordinate(x,y)
+        val c = Coordinate(x, y)
+
+        return when {
+            obstacles.contains(c) -> coordinate
+            else -> c
+        }
     }
 
     fun moveBackwardTo(coordinate: Coordinate, direction: Direction): Coordinate {
@@ -36,14 +40,21 @@ class Grid {
         if(direction.isSouth())
             y = increase(y)
 
-        return Coordinate(x,y)
+        val c = Coordinate(x, y)
+
+        return when {
+            obstacles.contains(c) -> coordinate
+            else -> c
+        }
 
     }
 
-    private fun increase(a: Int): Int = (a + 1) % max_squares
+    private val maxSquares = 10
+    private fun increase(a: Int): Int = (a + 1) % maxSquares
     private fun decrease(a: Int): Int = when (a) {
         0 -> 9
-        else -> (a - 1) % max_squares
+        else -> (a - 1) % maxSquares
     }
 }
-class Coordinate(val x: Int = 0, val y: Int = 0)
+
+data class Coordinate(val x: Int = 0, val y: Int = 0)

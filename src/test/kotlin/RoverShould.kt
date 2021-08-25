@@ -104,4 +104,16 @@ class RoverShould {
     fun `move south`(command: String, expected: String){
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "FFF, 0:2:N",
+        "BBBB, 0:7:N"
+    )
+    fun `stop when find an obstacle`(command: String, expected: String){
+        val obstacles = arrayListOf(Coordinate(0,3), Coordinate(0,6))
+        val grid = Grid(obstacles)
+        val rover = Rover(grid)
+        assertThat(rover.execute(command)).isEqualTo(expected)
+    }
 }
