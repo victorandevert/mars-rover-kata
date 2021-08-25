@@ -19,25 +19,44 @@ class Rover {
         var y = coordinate.y
         var x = coordinate.x
 
-        if (direction == NORTH)
-            if (y == 0) {
-                y = 9
-            }else {
-                y = (y - 1) % 10
-            }
+        if (direction.isNorth())
+            y = decrease(y)
+
+        if(direction.isEast())
+            x = decrease(x)
+
+        if(direction.isWest())
+            x = increase(x)
+
+        if(direction.isSouth())
+            y = increase(y)
+
         return Coordinate(x,y)
     }
 
     private fun forward(): Coordinate {
         var y = coordinate.y
         var x = coordinate.x
-        if (direction == NORTH)
-            y = (y + 1) % 10
 
-        if(direction == EAST)
-            x = (x + 1) % 10
+        if (direction.isNorth())
+            y = increase(y)
+
+        if(direction.isEast())
+            x = increase(x)
+
+        if (direction.isWest())
+            x =  decrease(x)
+
+        if(direction.isSouth())
+            y = decrease(y)
 
         return Coordinate(x,y)
+    }
+
+    private fun increase(a: Int): Int = (a + 1) % 10
+    private fun decrease(a: Int): Int = when (a) {
+        0 -> 9
+        else -> (a - 1) % 10
     }
 
 }
@@ -55,5 +74,15 @@ enum class Direction(val value: String, val left: String, val right: String) {
     fun turnRight(): Direction {
         return values().first { it.value == right }
     }
+
+    fun isNorth(): Boolean = this == NORTH
+
+    fun isSouth(): Boolean = this == SOUTH
+
+    fun isEast(): Boolean = this == EAST
+
+    fun isWest(): Boolean = this == WEST
+
+
 }
-data class Coordinate(val x: Int = 0, val y: Int = 0)
+class Coordinate(val x: Int = 0, val y: Int = 0)

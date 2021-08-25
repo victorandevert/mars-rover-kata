@@ -63,6 +63,8 @@ class RoverShould {
     @CsvSource(
         "RF, 1:0:E",
         "RFFFF, 4:0:E",
+        "RB, 9:0:E",
+        "RBBBB, 6:0:E"
     )
     fun `move right`(command: String, expected: String){
         val rover = Rover()
@@ -74,7 +76,32 @@ class RoverShould {
         "RFFFFFFFFFF, 0:0:E",
         "RFFFFFFFFFFFFFFFFF, 7:0:E"
     )
-    fun `wrap from right to left when moving forwawrd east`(command: String, expected: String){
+    fun `wrap from right to left when moving forwawrd`(command: String, expected: String){
+        val rover = Rover()
+        assertThat(rover.execute(command)).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "LF, 9:0:W",
+        "LFFF, 7:0:W",
+        "LB, 1:0:W",
+        "LBBBBBBBBBBBBBBBBB, 7:0:W"
+    )
+    fun `move left`(command: String, expected: String){
+        val rover = Rover()
+        assertThat(rover.execute(command)).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "RRF, 0:9:S",
+        "RRFFF, 0:7:S",
+        "RRB, 0:1:S",
+        "RRBBBBBBBBBBBBB, 0:3:S",
+        "RRFFFFFFFFFFFF, 0:8:S"
+    )
+    fun `move south`(command: String, expected: String){
         val rover = Rover()
         assertThat(rover.execute(command)).isEqualTo(expected)
     }
