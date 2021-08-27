@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("io.arrow-kt:arrow-core:0.13.2")
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.20.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.2")
