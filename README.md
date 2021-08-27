@@ -3,7 +3,7 @@
 ## Credits
 Inspired by [Victor Farcic](https://technologyconversations.com/2014/10/17/java-tutorial-through-katas-mars-rover/)
 
-Source [Kata-log](https://kata-log.rocks/mars-rover-kata)
+Source: [Kata-log](https://kata-log.rocks/mars-rover-kata)
 
 ## Description
 You’re part of the team that explores Mars by sending remotely controlled vehicles to the surface of the planet. Develop an API that translates the commands sent from earth to instructions that are understood by the rover.
