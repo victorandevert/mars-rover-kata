@@ -1,13 +1,18 @@
+import arrow.core.None
+import arrow.core.Option
+import arrow.core.Some
+
+
 class Grid(private val obstacles: List<Pair<Int,Int>> = emptyList()) {
 
-    fun move(direction: Char, position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
-        when (direction) {
-            'F' -> return moveForwardTo(position, orientation)
-            else -> return moveBackwardTo(position, orientation)
+    fun move(direction: Char, position: Pair<Int,Int>, orientation: Orientation): Option<Pair<Int, Int>> {
+        return when (direction) {
+            'F' -> moveForwardTo(position, orientation)
+            else -> moveBackwardTo(position, orientation)
         }
     }
 
-    private fun moveForwardTo(position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
+    private fun moveForwardTo(position: Pair<Int,Int>, orientation: Orientation): Option<Pair<Int,Int>>{
         var (x, y) = position
 
         if (orientation.isNorth())
@@ -25,13 +30,13 @@ class Grid(private val obstacles: List<Pair<Int,Int>> = emptyList()) {
         val p = Pair(x,y)
 
         return when {
-            obstacles.contains(p) -> position
-            else -> p
+            obstacles.contains(p) -> None
+            else -> Some(p)
         }
     }
 
 
-    private fun moveBackwardTo(position: Pair<Int,Int>, orientation: Orientation): Pair<Int,Int>{
+    private fun moveBackwardTo(position: Pair<Int,Int>, orientation: Orientation): Option<Pair<Int,Int>>{
         var (x, y) = position
 
         if (orientation.isNorth())
@@ -46,12 +51,11 @@ class Grid(private val obstacles: List<Pair<Int,Int>> = emptyList()) {
         if(orientation.isSouth())
             y = increase(y)
 
-
         val p = Pair(x,y)
 
         return when {
-            obstacles.contains(p) -> position
-            else -> p
+            obstacles.contains(p) -> None
+            else -> Some(p)
         }
 
     }

@@ -107,11 +107,12 @@ class RoverShould {
 
     @ParameterizedTest
     @CsvSource(
-        "FFF, 0:2:N",
-        "BBBB, 0:7:N"
+        "FFF, O:0:2:N",
+        "BBBB, O:0:7:N",
+        "FFRFFF, O:2:2:E"
     )
     fun `stop when find an obstacle`(command: String, expected: String){
-        val obstacles = arrayListOf(Pair(0,3), Pair(0,6))
+        val obstacles = arrayListOf(Pair(0,3), Pair(0,6), Pair(3,2))
         val grid = Grid(obstacles)
         val rover = Rover(grid)
         assertThat(rover.execute(command)).isEqualTo(expected)
